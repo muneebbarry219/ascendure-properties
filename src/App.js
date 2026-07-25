@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 // Components
 import Header from './components/Header';
@@ -21,7 +21,13 @@ import Countries from './pages/Countries';
 import About from './pages/About';
 import Insights from './pages/Insights';
 import ServicesPage from './pages/ServicesPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfUse from './pages/TermsOfUse';
+import CareersPage from './pages/CareersPage';
+import KsaPremiumResidencyPage from './pages/KsaPremiumResidencyPage';
+import GuideDetailPage from './pages/GuideDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -53,8 +59,14 @@ function App() {
                   <Route path="/countries" element={<Countries />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/insights" element={<Insights />} />
+                  <Route path="/insights/:slug" element={<GuideDetailPage />} />
                   <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/services/:serviceId" element={<ServiceDetailPage />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/terms" element={<TermsOfUse />} />
+                  <Route path="/careers" element={<CareersPage />} />
+                  <Route path="/ksa-premium-residency" element={<KsaPremiumResidencyPage />} />
 
                   {/* Admin */}
                   <Route path="/admin/login" element={<AdminLogin />} />

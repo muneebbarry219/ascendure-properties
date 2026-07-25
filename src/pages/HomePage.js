@@ -275,7 +275,7 @@ const HomePage = () => {
                     <img
                       src={country.flag}
                       alt={`${country.name} flag`}
-                      className="w-8 h-8 object-cover rounded-full"
+                      className="h-auto w-8 rounded-sm object-contain shadow-sm"
                     />
                   </div>
                 </div>
@@ -664,6 +664,73 @@ const HomePage = () => {
                 Become our Partner
                 <ArrowRight className="w-5 h-5 ml-2" />
               </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Q2 Luxury Market Report Preview */}
+      <section className="relative z-10 overflow-hidden bg-stone-100 py-24">
+        <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-yellow-400/10 blur-3xl"></div>
+        <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 lg:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.75 }}
+            className="relative mx-auto w-full max-w-md"
+          >
+            <div className="absolute -bottom-5 -right-5 h-full w-full rounded-2xl border border-yellow-500/30 bg-yellow-400/10"></div>
+            <div className="relative flex aspect-[3/4] flex-col overflow-hidden rounded-2xl bg-[#0A2540] p-9 text-white shadow-2xl">
+              <div className="flex items-baseline gap-2 border-b border-white/20 pb-5">
+                <span className="font-display text-xl font-bold tracking-[0.14em]">ASCENDURE</span>
+                <span className="text-[9px] font-bold tracking-[0.18em] text-yellow-400">PROPERTIES</span>
+              </div>
+              <div className="mt-auto">
+                <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-yellow-400">Q2 2026 · Market Intelligence</p>
+                <h2 className="font-display text-5xl font-bold leading-[1.05]">Luxury<br />Market<br />Report</h2>
+                <p className="mt-6 max-w-xs leading-7 text-slate-300">Saudi Arabia’s prime residential market, decoded for discerning buyers and investors.</p>
+              </div>
+              <div className="mt-9 flex items-center justify-between border-t border-white/20 pt-5 text-xs text-slate-400">
+                <span>PRIVATE CLIENT BRIEFING</span>
+                <span>Q2 / 26</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.75 }}
+          >
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.22em] text-yellow-600">Featured insight</p>
+            <h2 className="font-display text-4xl font-bold leading-tight text-[#0A2540] md:text-5xl">
+              Where Saudi luxury demand is heading next
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-slate-600">
+              Our Q2 brief examines the signals shaping prime residential property—from family-led demand and differentiated product to delivery quality, leasing depth, and long-term place-making.
+            </p>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              {[
+                ['Demand', 'Buyer priorities'],
+                ['Supply', 'Product quality'],
+                ['Outlook', 'Investor watchlist']
+              ].map(([title, copy]) => (
+                <div key={title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <div className="mb-3 h-1 w-8 rounded-full bg-yellow-500"></div>
+                  <h3 className="font-bold text-[#0A2540]">{title}</h3>
+                  <p className="mt-1 text-sm text-slate-500">{copy}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+              <Link to="/insights" className="inline-flex items-center justify-center rounded-lg bg-[#0A2540] px-8 py-4 font-bold text-white transition hover:bg-[#123b60]">
+                Explore full Insights <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <span className="text-sm text-slate-500">Q2 2026 · 6-page briefing</span>
             </div>
           </motion.div>
         </div>

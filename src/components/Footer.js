@@ -34,11 +34,12 @@ const Footer = () => {
       { name: 'London', href: '/neighbourhoods/eu' }
     ],
     services: [
-      { name: 'Buyer Advisory', href: '/services#buyer-advisory' },
-      { name: 'Seller Representation', href: '/services#seller-representation' },
-      { name: 'Property Management', href: '/services#property-management' },
-      { name: 'Relocation Support', href: '/services#relocation' },
-      { name: 'Financing Guidance', href: '/services#financing' }
+      { name: 'Buyer Advisory', href: '/services/buyer-advisory' },
+      { name: 'Seller Representation', href: '/services/seller-representation' },
+      { name: 'Property Management', href: '/services/property-management' },
+      { name: 'Relocation Support', href: '/services/relocation' },
+      { name: 'Financing Guidance', href: '/services/financing' },
+      { name: 'KSA Premium Residency', href: '/ksa-premium-residency' }
     ],
     company: [
       { name: 'About Us', href: '/about' },

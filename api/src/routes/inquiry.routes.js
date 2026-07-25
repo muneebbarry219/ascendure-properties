@@ -6,6 +6,31 @@ import { consumeVerifiedOtpToken } from '../utils/otpStore.js';
 
 const router = Router();
 
+// Public: capture a market-report lead before download
+router.post('/report-lead', async (req, res) => {
+  try {
+    const { name, email, phone, report, consent } = req.body;
+    if (!name || !email || !report || consent !== true) {
+      return res.status(400).json({ error: 'Name, email, report, and consent are required.' });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: 'Enter a valid email address.' });
+    }
+    const inquiry = await Inquiry.create({
+      name: String(name).trim(),
+      email: String(email).trim().toLowerCase(),
+      phone: phone ? String(phone).trim() : undefined,
+      report: String(report).trim(),
+      subject: 'Market brief download',
+      preferredContact: 'email',
+      message: `Requested market brief: ${String(report).trim()}`
+    });
+    res.status(201).json({ ok: true, id: inquiry.id });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
 // Public: submit inquiry for property
 router.post('/', async (req, res) => {
   try {

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Globe, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState(null);
   const [currentLanguage, setCurrentLanguage] = useState('EN');
   const location = useLocation();
   const forceDarkLogo = location.pathname.startsWith('/property/');
@@ -33,7 +34,20 @@ const Header = () => {
 
   const navigation = [
     { name: 'Home', href: '/' },
+    {
+      name: 'Services',
+      href: '/services',
+      submenu: [
+        { name: 'Buyer Advisory', href: '/services/buyer-advisory' },
+        { name: 'Seller Representation', href: '/services/seller-representation' },
+        { name: 'Property Management', href: '/services/property-management' },
+        { name: 'Relocation Support', href: '/services/relocation' },
+        { name: 'Financing & Legal Guidance', href: '/services/financing' },
+        { name: 'KSA Premium Residency', href: '/ksa-premium-residency' }
+      ]
+    },
     { name: 'Properties', href: '/properties' },
+    { name: 'Investor Hub', href: '/investors' },
     { name: 'Neighbourhoods', href: '/neighbourhoods' },
     { name: 'About us', href: '/about' },
     { name: 'Insights', href: '/insights' }
@@ -59,7 +73,7 @@ const Header = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-5 xl:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center z-10">
@@ -72,22 +86,71 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 bg-black/40 backdrop-blur-sm rounded-lg px-6 py-3 z-20">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`text-sm font-medium transition-all duration-300 ${
-                  location.pathname === item.href
-                    ? 'text-yellow-400'
-                    : isScrolled 
-                      ? 'text-white hover:text-yellow-400' 
+          <nav className="absolute left-1/2 z-20 hidden -translate-x-1/2 items-center gap-5 whitespace-nowrap rounded-lg bg-black/40 px-5 py-3 backdrop-blur-sm lg:flex xl:gap-6">
+            {navigation.map((item) => {
+              const isActive = item.href === '/services'
+                ? location.pathname.startsWith('/services')
+                : location.pathname === item.href;
+
+              if (item.submenu) {
+                return (
+                  <div
+                    key={item.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredNav(item.name)}
+                    onMouseLeave={() => setHoveredNav(null)}
+                  >
+                    <Link
+                      to={item.href}
+                      className={`flex items-center gap-1 text-xs font-semibold transition-all duration-300 xl:text-sm ${
+                        isActive ? 'text-yellow-400' : 'text-white hover:text-yellow-400'
+                      }`}
+                    >
+                      {item.name.toUpperCase()}
+                      <ChevronDown className="w-4 h-4" />
+                    </Link>
+
+                    <AnimatePresence>
+                      {hoveredNav === item.name && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          className="absolute left-0 top-full w-64 pt-3"
+                        >
+                          <div className="rounded-xl border border-slate-200 bg-white/95 p-2 shadow-2xl backdrop-blur">
+                            {item.submenu.map((subItem) => (
+                              <Link
+                                key={subItem.name}
+                                to={subItem.href}
+                                onClick={() => setHoveredNav(null)}
+                                className="block rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors duration-200 hover:bg-slate-100 hover:text-slate-900"
+                              >
+                                {subItem.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`text-xs font-semibold transition-all duration-300 xl:text-sm ${
+                    isActive
+                      ? 'text-yellow-400'
                       : 'text-white hover:text-yellow-400'
-                }`}
-              >
-                {item.name.toUpperCase()}
-              </Link>
-            ))}
+                  }`}
+                >
+                  {item.name.toUpperCase()}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right Side - Contact Button and Language */}
@@ -95,7 +158,7 @@ const Header = () => {
             {/* Contact Button */}
             <Link
               to="/contact"
-              className="hidden sm:inline-flex text-white font-bold px-6 py-2 rounded-lg text-sm transition-all duration-300"
+              className="hidden xl:inline-flex text-white font-bold px-5 py-2 rounded-lg text-sm transition-all duration-300"
               style={{ backgroundColor: '#0A2540' }}
               onMouseEnter={(e) => e.target.style.backgroundColor = '#0B2A4A'}
               onMouseLeave={(e) => e.target.style.backgroundColor = '#0A2540'}
@@ -179,7 +242,7 @@ const Header = () => {
                             key={subItem.name}
                             to={subItem.href}
                             onClick={() => setIsMenuOpen(false)}
-                            className="block px-4 py-2 text-sm text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors duration-200"
+                            className="block px-4 py-2 text-sm text-white/80 hover:text-yellow-400 hover:bg-white/10 rounded-lg transition-colors duration-200"
                           >
                             {subItem.name}
                           </Link>
